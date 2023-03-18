@@ -1,14 +1,16 @@
 # dotfiles
 
-Some simple dotfiles I use on my linux systems. 
+Some simple dotfiles I will now try to use on my linux systems.
 
-I keep them on this git repo to seamlessly move them from a installation to another.
+I'll keep core dotfiles on this git repo to preserve them.
 
 ## Usage
-Once in a while I run the backup.sh in order to copy selected dotfiles inside the repo folder, commiting and pushing it.
+Once in a while I will run the `backup.sh` (maybe with a cron task) in order to copy the *selected* dotfiles.
 
-On fresh installed systems I run install.sh in order to copy the dotfiles to home and other places.
+On fresh installed systems I intend to run `install.sh` [TODO]  in order to copy the dotfiles to proper places.
+
 
 ## License
+Despite being very simple scripts, you are allowed to copy and use them as you wish if they suit your needs.
 
-You can use as you please.
+You are not required to give any credits for this work.
