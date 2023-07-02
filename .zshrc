@@ -22,3 +22,15 @@ alias vrc="vim ~/.vimrc"
 alias err='sudo dmesg | grep -Ei "warning|error"'
 alias pg='ping -c 3 google.com'
 alias zrc='vim ~/.zshrc'
+
+alias start='sudo systemctl start '
+alias stop='sudo systemctl stop '
+alias pfilter='ps auwwx | grep '
+
+function vpnup() {
+    local config=$1
+    shift
+    sudo openvpn --auth-nocache --config $config --auth-user-pass $HOME/.nvpn $@
+}
+
+alias big='sudo du | sort -nr | head'

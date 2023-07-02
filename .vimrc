@@ -9,8 +9,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " Vundle plugins goes here
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'davidhalter/jedi-vim' # not compatible with YCM
 Plugin 'tomasr/molokai'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/nerdtree'
@@ -20,6 +19,8 @@ Plugin 'mattn/emmet-vim'
 Plugin 'vim-airline/vim-airline' "the status bar
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-surround' " parenthesis and quotes...
+Plugin 'rust-lang/rust.vim'
+Plugin 'ycm-core/YouCompleteMe'
 " end of plugins...
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -34,11 +35,8 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-"
-"
-
-
 " the usual stuff
+
 syntax enable
 
 set expandtab
@@ -55,3 +53,4 @@ colorscheme molokai
 set bg=dark
 set hls
 
+let g:ycm_autoclose_preview_window_after_completion=1
