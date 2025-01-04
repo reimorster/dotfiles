@@ -1,29 +1,59 @@
-" reimorster vimrc
-" jan 2023
-set encoding=UTF-8
-set nocompatible              " be iMproved, required for Vundle
-filetype off                  " required for Vundle
+set nocompatible
+filetype off
 
-" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" Vundle plugins goes here
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'davidhalter/jedi-vim' # not compatible with YCM
-Plugin 'tomasr/molokai'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'scrooloose/nerdtree'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'mattn/emmet-vim'
-Plugin 'vim-airline/vim-airline' "the status bar
+
+" Theming
+Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-surround' " parenthesis and quotes...
-Plugin 'rust-lang/rust.vim'
-Plugin 'ycm-core/YouCompleteMe'
-" end of plugins...
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plugin 'ryanoasis/vim-devicons'
+
+
+" Autocomplete
+Plugin 'ycm-core/youcompleteme'
+Plugin 'davidhalter/jedi-vim' 
+
+" Formatting
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'yggdroot/indentline'
+Plugin 'tpope/vim-surround'
+Plugin 'tell-k/vim-autopep8'
+
+" Coding Helpers
+Plugin 'tpope/vim-commentary'
+Plugin 'mattn/emmet-vim'
+Plugin 'scrooloose/nerdcommenter'
+
+" Lint and language support
+Plugin 'dense-analysis/ale'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'sheerun/vim-polyglot'
+
+" File nav
+
+Plugin 'preservim/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" Git handling
+Plugin 'tpope/vim-fugitive'
+
+
+" Snipets
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+
+" Other
+Plugin 'leshill/vim-json'
+Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'vim-test/vim-test'
+
+call vundle#end()
+filetype plugin indent on
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -35,22 +65,106 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-" the usual stuff
 
-syntax enable
+syntax on
+set number
 
-set expandtab
-set smarttab
+"set cursorline
 set shiftwidth=4
 set tabstop=4
-
+set expandtab
+set nobackup
 set nowrap
-set autoindent
-set smartindent
-set nu
+set ignorecase
+set hlsearch
+set history=1000
 
+" Enable YouCompleteMe autocompletion
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+" Optional: enable suggestions as you type
+let g:ycm_min_num_of_chars_for_completion = 2
+
+" Optional: Disable preview window for completions
+set completeopt-=preview
+
+" disable syntastic for Python and enable ALE with Flake8
+let g:syntastic_ignore_filetypes = ['python']
+let g:ale_python_flake8_executable = 'flake8'
+let g:ale_linters = { 'python': ['flake8'] }
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'always'
+
+" disable YCM linting for Python files because were going to use ALE
+
+let g:ycm_language_server = {
+\   'python': {
+\     'autostart': 1,
+\     'flags': ['--disable-diagnostics'], 
+\   }
+\ }
+
+" Snippets
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
+
+" Theming
+"
 colorscheme molokai
-set bg=dark
-set hls
+let g:airline_theme= 'dark'
 
-let g:ycm_autoclose_preview_window_after_completion=1
+
+" CTRL P Configuration
+
+let g:ctrlp_working_path_mode = 'ra'
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+\ }
+
+nnoremap <C-p> :CtrlP<CR>
+
+let g:ctrlp_show_hidden = 1
+
+let g:ctrlp_max_files = 1000
+
+" NERDTree Configuration
+
+" Open NERDTree with F2
+nnoremap <F2> :NERDTreeToggle<CR>
+
+" Open NERDTree automatically when Vim starts if no files are specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Close Vim if NERDTree is the only window left open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | quit | endif
+
+" Show hidden files
+let NERDTreeShowHidden=1
+
+" Automatically focus NERDTree when opening
+let NERDTreeWinPos = "left"
+let NERDTreeWinSize = 30
+
+" Hide specific directories in NERDTree
+let NERDTreeIgnore = ['\v(^|/)\.(git|svn|node_modules|env|DS_Store)|__pycache__$']
+
+
+" Icons
+
+" Enable icons for NERDTree
+let g:webdevicons_enable_nerdtree = 1
+
+" Enable icons for CtrlP (optional)
+let g:webdevicons_enable_ctrlp = 1
+
+" Use default icons if none are found
+let g:webdevicons_conceal_nerdtree_brackets = 1
+
+set encoding=utf-8
+set colorcolumn=80
+set nowrap
